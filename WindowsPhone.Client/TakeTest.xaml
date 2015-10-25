@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="WindowsPhone.Client.TakeTest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsPhone.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    
+        DataContext="{Binding TakeTest, Source={StaticResource Locator}}"
+    d:DataContext="{Binding TakeTest, Source={StaticResource Locator}}"
+    >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="TitlePanel" Margin="12,17,0,15">
+            <TextBlock Text="Q&amp;A App" Margin="12,0" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <StackPanel Margin="9,-7,0,0" Orientation="Horizontal">
+                <TextBlock Text="Question (" FontSize="38" Style="{StaticResource PhoneTextTitle1Style}" />
+                <TextBlock Text="{Binding QuestionIndex, Converter={StaticResource AddOneToIndexConverter}}" FontSize="38" Style="{StaticResource PhoneTextTitle1Style}" />
+                <TextBlock Text="/" FontSize="38" Style="{StaticResource PhoneTextTitle1Style}" />
+                <TextBlock Text="{Binding QuestionsCount}" FontSize="38" Style="{StaticResource PhoneTextTitle1Style}" />
+                <TextBlock Text=")" FontSize="38" Style="{StaticResource PhoneTextTitle1Style}" />
+            </StackPanel>
+        </StackPanel>
+        <Grid Margin="10" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="140" Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text="{Binding CurrentQuestion.QuestionPhrase}"></TextBlock>
+            <ListView Margin="0,5,0,0" x:Name="AnswersListView" Grid.Row="1" ItemContainerStyle="{StaticResource SelectionListView}" ItemsSource="{Binding CurrentQuestionAnswers}" DisplayMemberPath="AnswerPhrase" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+              <Border Grid.Row="1" BorderBrush="White" BorderThickness="1,1,1,1"></Border>
+
+            <Button IsEnabled="{Binding SelectedItem,Converter={StaticResource NullObjectToBooleanFalseConverter},ElementName=AnswersListView}" CommandParameter="{Binding SelectedItem,ElementName=AnswersListView}" Command="{Binding SelectAnswerCommand,Mode=OneWay}" BorderThickness="0" Margin="0,-10" HorizontalAlignment="Stretch" FontSize="40" Grid.Row="2" Content="{Binding IsFinalQuestion, Converter={StaticResource TakeTestButtonContentConverter}, Mode=OneWay}" Background="{Binding SelectedItem, Converter={StaticResource NullObjectToBrushConverter}, ElementName=AnswersListView}" />
+        </Grid>
+    </Grid>
+</Page>

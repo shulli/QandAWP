@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="WindowsPhone.Client.ShowResult"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsPhone.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+
+    DataContext="{Binding ShowResult, Source={StaticResource Locator}}"
+    d:DataContext="{Binding ShowResult, Source={StaticResource Locator}}"
+    >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel" Margin="12,17,0,15">
+            <TextBlock Text="Q&amp;A App" Margin="12,0" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="Results" Margin="9,-7,0,0" FontSize="38" Style="{StaticResource PhoneTextTitle1Style}" />
+        </StackPanel>
+        <Border Grid.Row="1" BorderBrush="White" BorderThickness="1,1,1,1"></Border>
+        <Grid  Margin="10" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text="You Scored ("></TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2"  Text="{Binding TestResultDisplayPercentage}"></TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text="%)"></TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text="("></TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text="{Binding TestCorrectAnswers}"></TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text="/"></TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text="{Binding TestResults.Count}"></TextBlock>
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="30" Grid.ColumnSpan="2" Text=") Correct Answers"></TextBlock>
+
+            </StackPanel>
+            <Border Grid.Row="2" BorderBrush="White" Margin="-10,6,-10,0" BorderThickness="1,1,1,1"></Border>
+
+            <ListView   x:Name="TestListView" Grid.Row="3"  ItemsSource="{Binding TestResults}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid  Margin="10,8,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="0,0,5,0" FontSize="30" Text="{Binding Key}" Foreground="{Binding Value.IsCorrectAnswer,Converter={StaticResource BooleanToGreenRedConverter}}"></TextBlock>
+                            <TextBlock  FontSize="30" Grid.Column="1" Text=". " Foreground="{Binding Value.IsCorrectAnswer,Converter={StaticResource BooleanToGreenRedConverter}}"></TextBlock>
+                            <TextBlock  FontSize="30" Grid.Column="2" Text="{Binding Value.AnswerPhrase}" Foreground="{Binding Value.IsCorrectAnswer,Converter={StaticResource BooleanToGreenRedConverter}}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <StackPanel Grid.Row="3">
+            <Border BorderBrush="White" Margin="0,6,0,0" BorderThickness="1,1,1,1"></Border>
+            <Button  Command="{Binding FinishTestCommand,Mode=OneWay}" BorderThickness="0" Margin="0,-10" HorizontalAlignment="Stretch" FontSize="40" Content="Finish" Background="Green" />
+
+        </StackPanel>
+
+    </Grid>
+</Page>

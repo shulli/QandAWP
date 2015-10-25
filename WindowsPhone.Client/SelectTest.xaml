@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="WindowsPhone.Client.SelectTest"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsPhone.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding SelectTest, Source={StaticResource Locator}}"
+    d:DataContext="{Binding SelectTest, Source={StaticResource Locator}}"
+    >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel" Margin="12,17,0,15">
+            <TextBlock Text="Q&amp;A App" Margin="12,0" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="Select Test" Margin="9,-7,0,0" FontSize="38" Style="{StaticResource PhoneTextTitle1Style}" />
+        </StackPanel>
+        <Border Grid.Row="1" BorderBrush="White" BorderThickness="1,1,1,1"></Border>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListView  x:Name="TestListView" Grid.Row="0" ItemContainerStyle="{StaticResource SelectionListView}" ItemsSource="{Binding Tests}" DisplayMemberPath="TestName">
+
+            </ListView>
+            <Border Grid.Row="1" BorderBrush="White" BorderThickness="1,1,1,1"></Border>
+
+            <Button IsEnabled="{Binding SelectedItem,Converter={StaticResource NullObjectToBooleanFalseConverter},ElementName=TestListView}" CommandParameter="{Binding SelectedItem,ElementName=TestListView}" Command="{Binding SelectTestCommand,Mode=OneWay}" BorderThickness="0" Margin="0,-10" HorizontalAlignment="Stretch" FontSize="40" Grid.Row="2" Content="Start Test" Background="{Binding SelectedItem, Converter={StaticResource NullObjectToBrushConverter}, ElementName=TestListView}" />
+        </Grid>
+    </Grid>
+</Page>
